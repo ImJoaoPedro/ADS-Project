@@ -10,12 +10,12 @@ import java.net.Socket;
 
 public class Consultant {
 
-    private Socket socket = null;
-    private ObjectInputStream inputStream = null;
-    private ObjectOutputStream outputStream = null;
-    private PublicKey pubK = null;
-    private PrivateKey priK = null;
-    private Solution solution = null;
+    private Socket socket;
+    private ObjectInputStream inputStream;
+    private ObjectOutputStream outputStream;
+    private PublicKey pubK;
+    private PrivateKey priK;
+    private Solution solution;
 
     public static void main(String[] args) {
         Consultant consultant = new Consultant();

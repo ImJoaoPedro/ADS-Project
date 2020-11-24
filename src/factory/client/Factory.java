@@ -10,10 +10,10 @@ import java.net.Socket;
 
 public class Factory {
 
-    private ServerSocket serverSocket = null;
-    private Socket socket = null;
-    private ObjectInputStream inStream = null;
-    private ObjectOutputStream outputStream = null;
+    private ServerSocket serverSocket;
+    private Socket socket;
+    private ObjectInputStream inStream;
+    private ObjectOutputStream outputStream;
 
     public static void main(String[] args) {
         Factory factory = new Factory();

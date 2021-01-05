@@ -4,6 +4,7 @@ import objects.Message;
 import objects.PrivateKey;
 import objects.PublicKey;
 import objects.Solution;
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;

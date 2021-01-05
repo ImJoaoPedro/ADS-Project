@@ -11,6 +11,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="ADS-Project" target="15" />
+      <module name="ADS-Project (1)" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

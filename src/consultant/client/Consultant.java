@@ -1,31 +1,22 @@
 package consultant.client;
 
-import objects.Message;
-import objects.PrivateKey;
-import objects.PublicKey;
-import objects.Solution;
+import objects.*;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 
 public class Consultant {
 
-    private Socket socket;
-    private ObjectInputStream inputStream;
-    private ObjectOutputStream outputStream;
-    private PublicKey pubK;
-    private PrivateKey priK;
-    private Solution solution;
-
     public static void main(String[] args) {
         Consultant consultant = new Consultant();
 
-        consultant.generateKeys();
-        consultant.generateSolution();
-        consultant.encryptSolution();
-        
-        Message message = new Message(consultant.getPubK(), consultant.getSolution());
+        KeyPair kp = consultant.generateKeys();
+        Solution solution = consultant.generateSolution(args[0]);
+        consultant.encryptSolution(solution);
+
+        Message message = new Message(kp.getPublicKey(), solution);
 
         consultant.sendMessage(message);
     }
@@ -33,12 +24,12 @@ public class Consultant {
 
     public void sendMessage(Message message) {
         try {
-            socket = new Socket("localHost", 4445);
+            Socket socket = new Socket("localHost", 4445);
             System.out.println("Connected");
-            outputStream = new ObjectOutputStream(socket.getOutputStream());
+            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
             outputStream.writeObject(message);
 
-            inputStream = new ObjectInputStream(socket.getInputStream());
+            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
             Message text = (Message) inputStream.readObject();
             System.out.println("received - "+text.getSolution().getText());
 
@@ -47,29 +38,19 @@ public class Consultant {
         }
     }
 
-
-    private void encryptSolution() {
-        solution.setText(solution.getText()+" is now encrypted");
+    private void encryptSolution(Solution s) {
+        s.setText(s.getText()+" is now encrypted");
     }
 
-    public void generateKeys(){
-        pubK = new PublicKey("asd");
-        priK = new PrivateKey("qwe");
+    public KeyPair generateKeys(){
+        PublicKey pubK = new PublicKey("asd");
+        PrivateKey priK = new PrivateKey("qwe");
+        return new KeyPair(priK, pubK);
     }
 
-    public PublicKey getPubK() {
-        return pubK;
+    public Solution generateSolution(String arg) {
+        Solution s = new Solution("solucao 123");
+        return s;
     }
 
-    public PrivateKey getPriK() {
-        return priK;
-    }
-
-    public void generateSolution() {
-        solution = new Solution("solucao 123");
-    }
-
-    public Solution getSolution() {
-        return solution;
-    }
 }

@@ -5,6 +5,8 @@ import com.n1analytics.paillier.PaillierContext;
 import com.n1analytics.paillier.PaillierPrivateKey;
 import com.n1analytics.paillier.PaillierPublicKey;
 import objects.*;
+
+import javax.swing.*;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.math.BigInteger;
@@ -16,6 +18,7 @@ public class Consultant {
     private int desiredQuality;
     private int[] numbers;
     private int iterations = 0;
+    private JTextArea textArea;
 
     public static void main(String[] args) {
         Consultant consultant = new Consultant(args);
@@ -25,6 +28,10 @@ public class Consultant {
     public Consultant(String[] args){
         numbers = StringArrToIntArr(args);
         desiredQuality = numbers[0];
+    }
+
+    public void setTextArea(JTextArea textArea) {
+        this.textArea = textArea;
     }
 
     public void start(){

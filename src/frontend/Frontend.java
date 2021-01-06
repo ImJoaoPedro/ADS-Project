@@ -1,14 +1,15 @@
 package frontend;
 
+import consultant.client.Consultant;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class frontend extends JApplet {
+public class Frontend extends JFrame {
 
-	private JFrame frame;
 	private JTextField firstVarName;
 	private JTextField firstVarType;
 	private JTextField firstVarValue;
@@ -18,21 +19,16 @@ public class frontend extends JApplet {
 	private JTextField thirdVarName;
 	private JTextField thirdVarType;
 	private JTextField thirdVarValue;
+	private JTextArea textArea;
 
 	/**
 	 * Launch the application.
 	 */
 
+	public void init() {
+		this.setTitle("Homomorphic Enryption Project");
 
-
-	public  void init() {
-		
-
-		JLabel lblNewLabel = new JLabel("Homomorphic Enryption ");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(129, 11, 259, 31);
-		
+		this.setLayout(null);
 
 		JLabel lblNewLabel_1 = new JLabel("First Variable:");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -44,18 +40,9 @@ public class frontend extends JApplet {
 		this.getContentPane().add(firstVarName);
 		firstVarName.setColumns(10);
 
-		firstVarType = new JTextField();
-		firstVarType.setColumns(10);
-		firstVarType.setBounds(46, 99, 86, 20);
-		this.getContentPane().add(firstVarType);
-
 		JLabel lblNewLabel_2 = new JLabel("Name");
 		lblNewLabel_2.setBounds(10, 81, 46, 14);
 		this.getContentPane().add(lblNewLabel_2);
-
-		JLabel lblNewLabel_2_1 = new JLabel("Type");
-		lblNewLabel_2_1.setBounds(10, 102, 46, 14);
-		this.getContentPane().add(lblNewLabel_2_1);
 
 		firstVarValue = new JTextField();
 		firstVarValue.setBounds(46, 121, 86, 20);
@@ -80,15 +67,6 @@ public class frontend extends JApplet {
 		secondVarName.setBounds(46, 187, 86, 20);
 		this.getContentPane().add(secondVarName);
 
-		secondVarType = new JTextField();
-		secondVarType.setColumns(10);
-		secondVarType.setBounds(46, 208, 86, 20);
-		this.getContentPane().add(secondVarType);
-
-		JLabel lblNewLabel_2_1_2 = new JLabel("Type");
-		lblNewLabel_2_1_2.setBounds(10, 211, 46, 14);
-		this.getContentPane().add(lblNewLabel_2_1_2);
-
 		JLabel lblNewLabel_2_1_1_1 = new JLabel("Value ");
 		lblNewLabel_2_1_1_1.setBounds(10, 233, 86, 14);
 		this.getContentPane().add(lblNewLabel_2_1_1_1);
@@ -98,11 +76,11 @@ public class frontend extends JApplet {
 		secondVarValue.setBounds(46, 230, 86, 20);
 		this.getContentPane().add(secondVarValue);
 
-		JLabel lblNewLabel_2_3 = new JLabel("Name");
+		JLabel lblNewLabel_2_3 = new JLabel("Value ");
 		lblNewLabel_2_3.setBounds(10, 301, 46, 14);
 		this.getContentPane().add(lblNewLabel_2_3);
 
-		JLabel lblNewLabel_1_2 = new JLabel("Third Variable:");
+		JLabel lblNewLabel_1_2 = new JLabel("Desired Quality:");
 		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_1_2.setBounds(10, 273, 105, 14);
 		this.getContentPane().add(lblNewLabel_1_2);
@@ -112,63 +90,36 @@ public class frontend extends JApplet {
 		thirdVarName.setBounds(46, 298, 86, 20);
 		this.getContentPane().add(thirdVarName);
 
-		thirdVarType = new JTextField();
-		thirdVarType.setColumns(10);
-		thirdVarType.setBounds(46, 319, 86, 20);
-		this.getContentPane().add(thirdVarType);
-
-		JLabel lblNewLabel_2_1_3 = new JLabel("Type");
-		lblNewLabel_2_1_3.setBounds(10, 322, 46, 14);
-		this.getContentPane().add(lblNewLabel_2_1_3);
-
-		JLabel lblNewLabel_2_1_1_2 = new JLabel("Value ");
-		lblNewLabel_2_1_1_2.setBounds(10, 344, 86, 14);
-		this.getContentPane().add(lblNewLabel_2_1_1_2);
-
-		thirdVarValue = new JTextField();
-		thirdVarValue.setColumns(10);
-		thirdVarValue.setBounds(46, 341, 86, 20);
-		this.getContentPane().add(thirdVarValue);
-
-		JTextArea textArea = new JTextArea();
+		textArea = new JTextArea();
 		textArea.setBounds(199, 76, 279, 282);
 		this.getContentPane().add(textArea);
 
 		JButton btnSubmit = new JButton("Submit");
+		btnSubmit.setBounds(46, 388, 89, 23);
 		btnSubmit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				textArea.selectAll();
-				textArea.replaceSelection("");
-				textArea.append("First Variable:"+"\n");
-				textArea.append("name:"+firstVarName.getText()+"\n");
-				textArea.append("type:"+firstVarType.getText()+"\n");
-				textArea.append("value:"+firstVarValue.getText()+"\n");
-				textArea.append("--------------------------------"+"\n");
-				textArea.append("Second Variable:"+"\n");
-				textArea.append("name:"+secondVarName.getText()+"\n");
-				textArea.append("type:"+secondVarType.getText()+"\n");
-				textArea.append("value:"+secondVarValue.getText()+"\n");
-				textArea.append("--------------------------------"+"\n");
-				textArea.append("Third Variable:"+"\n");
-				textArea.append("name:"+thirdVarName.getText()+"\n");
-				textArea.append("type:"+thirdVarType.getText()+"\n");
-				textArea.append("value:"+thirdVarValue.getText()+"\n");
-				textArea.append("--------------------------------"+"\n");
+				//textArea.selectAll();
+				//textArea.replaceSelection("");
+				String[] args = new String[3];
+				args[0] = thirdVarName.getText();
+				args[1] = firstVarValue.getText();
+				args[2] = secondVarValue.getText();
+				Consultant consultant = new Consultant(args);
+				consultant.setTextArea(textArea);
+				consultant.start();
 			}
 		});
-		btnSubmit.setBounds(46, 388, 89, 23);
 		this.add(btnSubmit);
-		this.getContentPane().add(lblNewLabel);
-		
-		
 	}
 	
 
 	/**
 	 * Create the application.
 	 */
-	public frontend() {
+	public Frontend() {
+		init();
 	}
+
 }
 
 

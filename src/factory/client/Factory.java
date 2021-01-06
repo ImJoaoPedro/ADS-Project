@@ -11,6 +11,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Factory {
 
@@ -20,6 +22,7 @@ public class Factory {
     }
 
     public void listen() {
+        setLogging();
         try {
             ServerSocket serverSocket = new ServerSocket(4445);
             while(true){
@@ -62,6 +65,11 @@ public class Factory {
         ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
         outputStream.writeObject(message);
         socket.close();
+    }
+
+    private void setLogging(){
+        Logger logger = Logger.getLogger("com.n1analytics.paillier");
+        logger.setLevel(Level.OFF);
     }
 
 }

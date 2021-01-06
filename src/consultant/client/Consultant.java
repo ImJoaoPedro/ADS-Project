@@ -7,10 +7,14 @@ import com.n1analytics.paillier.PaillierPublicKey;
 import objects.*;
 
 import javax.swing.*;
+import java.io.FileNotFoundException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintStream;
 import java.math.BigInteger;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Consultant {
 
@@ -35,6 +39,7 @@ public class Consultant {
     }
 
     public void start(){
+        setLogging();
         //Create KeyPair
         KeyPair kp = generateKeys();
         do{
@@ -47,6 +52,7 @@ public class Consultant {
             sendMessage(message, kp);
         } while(quality < desiredQuality);
         System.out.println("Found desired quality: " + desiredQuality);
+        print("Found desired quality: " + desiredQuality);
     }
 
 
@@ -110,7 +116,15 @@ public class Consultant {
         this.quality = quality;
     }
 
-    public int getQuality() {
-        return quality;
+    private void print(String s){
+        if(textArea != null){
+            textArea.append(s);
+            textArea.append("\n");
+        }
+    }
+
+    private void setLogging(){
+        Logger logger = Logger.getLogger("com.n1analytics.paillier");
+        logger.setLevel(Level.OFF);
     }
 }

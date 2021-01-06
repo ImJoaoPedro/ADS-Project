@@ -6,23 +6,17 @@ public class Message implements Serializable {
 
     private static final long serialVersionUID = 5950169519310163575L;
 
-    private PublicKey publicKey;
-    private Solution solution;
+    private EncryptedSolution solution;
 
-    public Message(PublicKey publicKey, Solution solution){
-        this.publicKey=publicKey;
+    public Message(EncryptedSolution solution){
         this.solution=solution;
     }
 
-    public PublicKey getPublicKey() {
-        return publicKey;
-    }
-
-    public Solution getSolution() {
+    public EncryptedSolution getSolution() {
         return solution;
     }
 
-    public void setSolution(Solution solution) {
+    public void setSolution(EncryptedSolution solution) {
         this.solution = solution;
     }
 }

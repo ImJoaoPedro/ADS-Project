@@ -1,5 +1,9 @@
 package factory.client;
 
+import com.n1analytics.paillier.EncryptedNumber;
+import com.n1analytics.paillier.PaillierContext;
+import com.n1analytics.paillier.PaillierPublicKey;
+import objects.EncryptedSolution;
 import objects.Message;
 
 import java.io.IOException;
@@ -10,11 +14,6 @@ import java.net.Socket;
 
 public class Factory {
 
-    private ServerSocket serverSocket;
-    private Socket socket;
-    private ObjectInputStream inStream;
-    private ObjectOutputStream outputStream;
-
     public static void main(String[] args) {
         Factory factory = new Factory();
         factory.listen();
@@ -22,11 +21,11 @@ public class Factory {
 
     public void listen() {
         try {
-            serverSocket = new ServerSocket(4445);
+            ServerSocket serverSocket = new ServerSocket(4445);
             while(true){
-                socket = serverSocket.accept();
+                Socket socket = serverSocket.accept();
                 System.out.println("Connected");
-                inStream = new ObjectInputStream(socket.getInputStream());
+                ObjectInputStream inStream = new ObjectInputStream(socket.getInputStream());
                 Message message = (Message) inStream.readObject();
 
                 dealWithMessage(message);
@@ -39,13 +38,28 @@ public class Factory {
     }
 
     private void dealWithMessage(Message message){
-        System.out.println("received - "+message.getSolution().getText());
-        message.getSolution().setText("Evaluation of encrypted solution 123");
-        System.out.println("sent - "+message.getSolution().getText());
+        System.out.println("received a message!");
+
+        EncryptedSolution solution = message.getSolution();
+        evaluate(solution);
+    }
+
+    private void evaluate(EncryptedSolution solution) {
+        PaillierPublicKey key = new PaillierPublicKey(solution.getModulus());
+        PaillierContext context = key.createSignedContext();
+
+        EncryptedNumber quality = context.encrypt(0);
+
+        for(int i=0; i<solution.getNumbers().length; i++){
+            quality = context.add(quality, new EncryptedNumber(context, solution.getNumbers()[i], solution.getExponents()[i]));
+        }
+
+        solution.setQuality(quality.calculateCiphertext());
+        solution.setQualityExponent(quality.getExponent());
     }
 
     private void sendResponseMessage(Socket socket, Message message) throws IOException {
-        outputStream = new ObjectOutputStream(socket.getOutputStream());
+        ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
         outputStream.writeObject(message);
         socket.close();
     }

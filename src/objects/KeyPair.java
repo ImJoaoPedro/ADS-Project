@@ -1,20 +1,25 @@
 package objects;
 
-public class KeyPair {
+import com.n1analytics.paillier.PaillierPrivateKey;
+import com.n1analytics.paillier.PaillierPublicKey;
 
-    PrivateKey privateKey;
-    PublicKey publicKey;
+import java.io.Serializable;
 
-    public KeyPair(PrivateKey privatek, PublicKey publick){
+public class KeyPair implements Serializable {
+
+    PaillierPrivateKey privateKey;
+    PaillierPublicKey publicKey;
+
+    public KeyPair(PaillierPrivateKey privatek, PaillierPublicKey publick){
         privateKey = privatek;
         publicKey = publick;
     }
 
-    public PrivateKey getPrivateKey() {
+    public PaillierPrivateKey getPrivateKey() {
         return privateKey;
     }
 
-    public PublicKey getPublicKey() {
+    public PaillierPublicKey getPublicKey() {
         return publicKey;
     }
 }

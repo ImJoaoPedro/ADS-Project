@@ -39,6 +39,7 @@ public class Consultant {
             Message message = new Message(encryptedSolution);
             sendMessage(message, kp);
         } while(quality < desiredQuality);
+        System.out.println("Found desired quality: " + desiredQuality);
     }
 
 
@@ -70,7 +71,7 @@ public class Consultant {
 
         BigInteger decryptedQuality = kp.getPrivateKey().raw_decrypt(quality.calculateCiphertext());
         setQuality(decryptedQuality.intValue());
-        System.out.println(decryptedQuality.toString());
+        System.out.println("Got this quality: "+decryptedQuality.toString());
     }
 
     public KeyPair generateKeys(){

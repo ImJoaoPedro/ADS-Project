@@ -50,7 +50,7 @@ public class Factory {
 
         EncryptedNumber quality = context.encrypt(0);
 
-        for(int i=0; i<solution.getNumbers().length; i++){
+        for(int i=1; i<solution.getNumbers().length; i++){
             quality = context.add(quality, new EncryptedNumber(context, solution.getNumbers()[i], solution.getExponents()[i]));
         }
 

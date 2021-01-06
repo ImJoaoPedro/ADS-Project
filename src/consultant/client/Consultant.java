@@ -12,21 +12,33 @@ import java.net.Socket;
 
 public class Consultant {
 
+    private int quality = 0;
+    private int desiredQuality;
+    private int[] numbers;
+    private int iterations = 0;
+
     public static void main(String[] args) {
-        Consultant consultant = new Consultant();
+        Consultant consultant = new Consultant(args);
+        consultant.start();
+    }
 
+    public Consultant(String[] args){
+        numbers = StringArrToIntArr(args);
+        desiredQuality = numbers[0];
+    }
+
+    public void start(){
         //Create KeyPair
-        KeyPair kp = consultant.generateKeys();
+        KeyPair kp = generateKeys();
+        do{
+            //Generates a Solution based on the Args
+            Solution solution = generateSolution(numbers);
 
-        //Generates a Solution based on the Args
-        Solution solution = consultant.generateSolution(consultant.StringArrToIntArr(args));
-
-        //Encrypts Solution
-        EncryptedSolution encryptedSolution = new EncryptedSolution(kp, solution);
-
-        Message message = new Message(encryptedSolution);
-
-        consultant.sendMessage(message, kp);
+            //Encrypts Solution & Sends it
+            EncryptedSolution encryptedSolution = new EncryptedSolution(kp, solution);
+            Message message = new Message(encryptedSolution);
+            sendMessage(message, kp);
+        } while(quality < desiredQuality);
     }
 
 
@@ -57,6 +69,7 @@ public class Consultant {
         EncryptedNumber quality = new EncryptedNumber(context, response.getSolution().getQuality(), response.getSolution().getQualityExponent());
 
         BigInteger decryptedQuality = kp.getPrivateKey().raw_decrypt(quality.calculateCiphertext());
+        setQuality(decryptedQuality.intValue());
         System.out.println(decryptedQuality.toString());
     }
 
@@ -68,7 +81,12 @@ public class Consultant {
     }
 
     public Solution generateSolution(int[] array) {
-        Solution solution = new Solution(array);
+        int[] temp = new int[array.length];
+        for (int i = 1; i < array.length; i++) {
+            temp[i] = array[i] + iterations;
+        }
+        Solution solution = new Solution(temp);
+        iterations++;
         return solution;
     }
 
@@ -80,4 +98,11 @@ public class Consultant {
         return result;
     }
 
+    public void setQuality(int quality) {
+        this.quality = quality;
+    }
+
+    public int getQuality() {
+        return quality;
+    }
 }

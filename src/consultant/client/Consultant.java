@@ -34,12 +34,10 @@ public class Consultant {
         desiredQuality = numbers[0];
     }
 
-    public void setTextArea(JTextArea textArea) {
-        this.textArea = textArea;
-    }
-
     public void start(){
+        //Set Logging
         setLogging();
+
         //Create KeyPair
         KeyPair kp = generateKeys();
         do{
@@ -52,9 +50,9 @@ public class Consultant {
             sendMessage(message, kp);
         } while(quality < desiredQuality);
         System.out.println("Found desired quality: " + desiredQuality);
-        print("Found desired quality: " + desiredQuality);
+        print("Found desired quality: " + desiredQuality + "\n");
+        print("It took " + iterations + " iterations \n");
     }
-
 
     public void sendMessage(Message message, KeyPair kp) {
         try {
@@ -126,5 +124,9 @@ public class Consultant {
     private void setLogging(){
         Logger logger = Logger.getLogger("com.n1analytics.paillier");
         logger.setLevel(Level.OFF);
+    }
+
+    public void setTextArea(JTextArea textArea) {
+        this.textArea = textArea;
     }
 }

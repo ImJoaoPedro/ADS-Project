@@ -11,14 +11,10 @@ import java.awt.event.ActionListener;
 public class Frontend extends JFrame {
 
 	private JTextField firstVarName;
-	private JTextField firstVarType;
 	private JTextField firstVarValue;
 	private JTextField secondVarName;
-	private JTextField secondVarType;
 	private JTextField secondVarValue;
 	private JTextField thirdVarName;
-	private JTextField thirdVarType;
-	private JTextField thirdVarValue;
 	private JTextArea textArea;
 
 	/**

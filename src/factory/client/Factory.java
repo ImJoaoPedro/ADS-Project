@@ -22,6 +22,7 @@ public class Factory {
     }
 
     public void listen() {
+        //Set Logging
         setLogging();
         try {
             ServerSocket serverSocket = new ServerSocket(4445);
